@@ -1,6 +1,5 @@
-import styled from "styled-components";
-import Header from "components/Base/Header";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const Menu = styled(Link)`
     text-decoration: none;
@@ -19,14 +18,14 @@ const Menu = styled(Link)`
     }
 `;
 
-const HeaderContainer = () => {
+const HeaderAuth = () => {
     return (
-        <Header>
-            <Menu to="">로그인</Menu>
-            <Menu to="">회원가입</Menu>
-        </Header>
+        <>
+            <Menu to="/login">로그인</Menu>
+            <Menu to="/">회원가입</Menu>
+        </>
     );
 
 };
 
-export default HeaderContainer;
+export default HeaderAuth;

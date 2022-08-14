@@ -6,5 +6,8 @@
 // 이런 식으로 각 파일들을 각 이름대로의 객체로 내보내주게 되면
 // import { Home, Auth } from "pages";
 // 와 같은 식으로 외부에서 쉽게 가져다가 쓸 수 있다. 
-export { default as Home } from './Home';
-export { default as Auth } from './Auth';
+export { default as Home } from "./Home";
+export { default as Auth } from "./Auth";
+export { default as Login } from "./Login";
+export { default as Dashboard } from "./Dashboard";
+export { default as NotFound } from "./NotFound";

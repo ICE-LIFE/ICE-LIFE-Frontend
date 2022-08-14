@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import oc from "open-color";
-import { shadow, media } from "lib/styleUtils";
+import { shadow, media } from "Lib/styleUtils";
 import { Link } from "react-router-dom";
+import HeaderAuth from "./HeaderAuth";
 
 // 상단 고정, 그림자
 const Positioner = styled.div`
@@ -41,7 +42,8 @@ const HeaderContents = styled.div`
 `;
 
 // 로고
-const Logo = styled.div`
+const Logo = styled(Link)`
+    text-decoration: none;
     font-size: 1.4rem;
     letter-spacing: 2px;
     color: ${oc.teal[7]};
@@ -80,19 +82,19 @@ const GradientBorder = styled.div`
     background: linear-gradient(to right, ${oc.teal[6]}, ${oc.cyan[5]});
 `;
 
-const Header = ({ children }) => {
+const Header = () => {
     return (
         <Positioner>
             <WhiteBackground>
                 <HeaderContents>
-                    <Logo>정통마켓</Logo>
+                    <Logo to="/" >정통마켓</Logo>
                     <Spacer>
                         <Menu to="/">중고 거래</Menu>
                         <Menu to="/">분실물 센터</Menu>
                         <Menu to="/">복지물품 대여</Menu>
                         <Menu to="/">학생회 공지</Menu>
                     </Spacer>
-                    {children}
+                    <HeaderAuth />
                 </HeaderContents>
             </WhiteBackground>
             <GradientBorder />
