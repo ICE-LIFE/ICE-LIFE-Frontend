@@ -90,9 +90,9 @@ const Header = () => {
                     <Logo to="/" >정통마켓</Logo>
                     <Spacer>
                         <Menu to="/">중고 거래</Menu>
-                        <Menu to="/">분실물 센터</Menu>
+                        <Menu to="/lostfound">분실물 센터</Menu>
                         <Menu to="/">복지물품 대여</Menu>
-                        <Menu to="/">학생회 공지</Menu>
+                        <Menu to="/Notice">학생회 공지</Menu>
                     </Spacer>
                     <HeaderAuth />
                 </HeaderContents>

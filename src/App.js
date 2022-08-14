@@ -2,12 +2,10 @@ import { Route, Routes } from "react-router-dom";
 import { AuthProvider } from "Context";
 import { Home, Auth, Login, Dashboard, NotFound } from "Pages";
 import Header from "Components/Base/Header";
-import LostFound from "components/board/LostFound";
-import Notice from "components/board/Notice";
+import LostFound from "Components/board/LostFound";
+import Notice from "Components/board/Notice";
 
 const App = () => {
-
-
   return (
     <>
       <AuthProvider>
