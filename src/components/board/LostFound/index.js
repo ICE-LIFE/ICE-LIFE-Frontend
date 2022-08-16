@@ -1,12 +1,14 @@
 import Main from "./Main";
 import Search from "./Search";
-import TableList from "./TableList";
+import BoardPage from "../BoardPage";
 
 const LostFound = () => {
     return (
         <>
             <Main />
-            <TableList />
+
+            <BoardPage postIdx={1} />
+
             <Search />
         </>
     );

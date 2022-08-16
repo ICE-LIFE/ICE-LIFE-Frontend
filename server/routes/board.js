@@ -13,7 +13,7 @@ router.get(`/:category_id`, (req, res) => {
     //     if(!err) res.send({ products : data});
     //     else res.send(err);
     // })
-    db.query(`select posts.id,category_id,nickname,author_id,content,thumbnail,posts.created_at,posts.updated_at,posts.deleted_at from posts left join users on users.id = posts.author_id where category_id = ${params.category_id}`,(err,data)=>{
+    db.query(`select posts.id,title,category_id,nickname,author_id,content,thumbnail,posts.created_at,posts.updated_at,posts.deleted_at from posts left join users on users.id = posts.author_id where category_id = ${params.category_id}`,(err,data)=>{
         if(!err) res.send({ products : data});
         else res.send(err);
     })
