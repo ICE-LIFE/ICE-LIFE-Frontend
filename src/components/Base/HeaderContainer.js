@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "components/Base/Header";
+import Header from "Components/Base/Header";
 
 const HeaderContainer = () => {
     return (

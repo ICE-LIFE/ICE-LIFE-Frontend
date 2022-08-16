@@ -1,10 +1,10 @@
 import React, {useEffect} from "react";
 import { Route, Routes } from "react-router-dom";
-import { Home, Auth } from "pages";
+import { Home, Auth } from "Pages";
 import './App.css';
 import axios from 'axios';
-import LostFound from "components/board/LostFound";
-import Notice from "components/board/Notice";
+import LostFound from "Components/board/LostFound";
+import Notice from "Components/board/Notice";
 
 const App = () => {
 
@@ -12,7 +12,6 @@ const App = () => {
   return (
     <>
       <LostFound />
-      <Notice />
     </>
   );
 };
