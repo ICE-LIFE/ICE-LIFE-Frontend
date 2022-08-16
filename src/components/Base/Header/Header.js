@@ -2,11 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import oc from "open-color";
 import { shadow, media } from "Lib/styleUtils";
-<<<<<<< HEAD
 import { Link } from "react-router-dom";
 import HeaderAuth from "./HeaderAuth";
-=======
->>>>>>> dev
 
 // 상단 고정, 그림자
 const Positioner = styled.div`
