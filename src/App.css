@@ -2,6 +2,40 @@
   text-align: center;
 }
 
+.table_list{
+  margin-right: 5%;
+  margin-left: 5%;
+}
+.pageNation{
+
+  /* 중앙으로 정렬 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.TextBox {
+  margin-top: 10px;
+  text-align: left;
+  margin-left: 5%;
+  font-size: 18px;
+  line-height: 1.5;
+}
+.Button_write{
+  text-align: right;
+  margin-right: 9%;
+  margin-bottom: 30px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+.lost_list{
+  border-radius: 5px;
+  margin : 20px;
+  padding : 10px;
+  display : flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
