@@ -1,17 +1,23 @@
-@import url('https://fonts.googleapis.com/css?family=Rajdhani:700');
+@font-face {
+	font-family: "SUIT Variable";
+	font-weight: 100 900;
+	src: url("fonts/SUIT-Variable.woff2") format("woff2-variations");
+}
+
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: "SUIT Variable";
 
-  box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+:root {
+  --color-dark: #0B0C4C;
+  --color-accent: #1E21CB;
+  --color-accent-white: #4A4DE4;
+  --color-light: #B3B9FF;
+  --color-white: #0B0C4C;
 }
+
