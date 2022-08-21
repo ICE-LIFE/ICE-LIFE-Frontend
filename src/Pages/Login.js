@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useAuthState, useAuthDispatch, loginUser } from "Context";
+import { useAuthDispatch, loginUser } from "Context";
 
 const Container = styled.div`
     display: flex;
@@ -27,11 +27,9 @@ const LoginFormItem = styled.div`
 `;
 
 const Login = () => {
-    const dispatch = useAuthDispatch()
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const { loading } = useAuthState() // 얘는 initialState안에 있는 애들 구조분해 할당
-
+    const dispatch = useAuthDispatch();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const navigate = useNavigate();
 
@@ -40,8 +38,8 @@ const Login = () => {
 
         let payload = { email, password };
         try {
-            const response = await loginUser(dispatch, payload)
-            if (!response.user) return;
+            const response = await loginUser(dispatch, payload);
+            if (!response) return;
             navigate("/dashboard");
         } catch (e) {
             console.error(e);
@@ -57,11 +55,11 @@ const Login = () => {
                     <LoginForm>
                         <LoginFormItem>
                             <label htmlFor="email">이메일</label>
-                            <input type="text" id={"email"} value={email} onChange={e => setEmail(e.target.value)} disabled={loading} />
+                            <input type="text" id={"email"} value={email} onChange={e => setEmail(e.target.value)} />
                         </LoginFormItem>
                         <LoginFormItem>
                             <label htmlFor="password">비밀번호</label>
-                            <input type="password" id={"password"} value={password} onChange={e => setPassword(e.target.value)} disabled={loading} />
+                            <input type="password" id={"password"} value={password} onChange={e => setPassword(e.target.value)} />
                         </LoginFormItem>
                     </LoginForm>
                     <button onClick={handleLogin}>로그인</button>

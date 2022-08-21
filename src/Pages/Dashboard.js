@@ -14,22 +14,22 @@ const DashboardPage = styled.div`
 `;
 
 const Dashboard = () => {
-    const dispatch = useAuthDispatch()
-    const userDetails = useAuthState() // 얘는  initialState
+    const dispatch = useAuthDispatch();
+    const userDetails = useAuthState(); // 얘는 initialState
     const navigate = useNavigate();
-
 
     const handleLogout = () => {
         logout(dispatch);
         navigate("/");
     }
+
     return (
         <div style={{ padding: 10 }}>
             <DashboardPage>
                 <h1>대시보드</h1>
                 <LogoutBtn onClick={handleLogout}>로그아웃</LogoutBtn>
             </DashboardPage>
-            <p>{userDetails.user.email}로 로그인 되었습니다.</p>
+            <p>{userDetails.user}로 로그인 되었습니다.</p>
         </div>
     );
 };

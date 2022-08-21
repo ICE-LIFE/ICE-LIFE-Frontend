@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useAuthState, logout, useAuthDispatch } from "Context";
 
 const Menu = styled(Link)`
     text-decoration: none;
@@ -19,10 +20,26 @@ const Menu = styled(Link)`
 `;
 
 const HeaderAuth = () => {
+    const dispatch = useAuthDispatch();
+    const userDetails = useAuthState();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout(dispatch);
+        navigate("/");
+    }
+    
     return (
         <>
-            <Menu to="/login">로그인</Menu>
-            <Menu to="/">회원가입</Menu>
+            {
+            userDetails.token ? (
+                <Menu to="/" onClick={handleLogout}>로그아웃</Menu>
+            ) : (
+                <>
+                    <Menu to="/login">로그인</Menu>
+                    <Menu to="/">회원가입</Menu>
+                </>
+            )}
         </>
     );
 
