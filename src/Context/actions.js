@@ -42,7 +42,7 @@ export const signUpUser = async (dispatch, signUpPayload) => {
 
     const response = null;
     try {
-        response = await axios.post("https://home.astro36.me/api/signup", frm, { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true });
+        response = await axios.post("/signup", frm, { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true });
 
         if (response.status === 200) {
             
