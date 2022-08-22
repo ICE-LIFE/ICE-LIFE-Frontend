@@ -1,8 +1,8 @@
 import Main from "./Main";
-import Search from "./Search";
+import Search from "../Search";
 import BoardPage from "../BoardPage";
 
-const LostFound = () => {
+const Notice = () => {
     return (
         <>
             <Main />
@@ -12,4 +12,4 @@ const LostFound = () => {
     );
 };
 
-export default LostFound;
+export default Notice;
