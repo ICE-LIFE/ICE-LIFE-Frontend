@@ -1,5 +1,5 @@
 import Main from "./Main";
-import Search from "./Search";
+import Search from "../Search";
 import BoardPage from "../BoardPage";
 
 const LostFound = () => {
