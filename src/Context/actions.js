@@ -29,3 +29,27 @@ export const logout = async dispatch => {
     dispatch({ type: "LOGOUT" });
     localStorage.removeItem("currentUser");
 };
+
+
+export const signUpUser = async (dispatch, signUpPayload) => {
+    const frm = new FormData();
+    frm.append("name", signUpPayload.name);
+    frm.append("id", signUpPayload.studentId);
+    frm.append("password1", signUpPayload.password1);
+    frm.append("password2", signUpPayload.password2);
+    frm.append("nickname", signUpPayload.nickname);
+    frm.append("email", signUpPayload.email);
+
+    const response = null;
+    try {
+        response = await axios.post("https://home.astro36.me/api/signup", frm, { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true });
+
+        if (response.status === 200) {
+            
+            dispatch({ type: "SIGNUP_SUCCESS" })
+            return response.data;
+        }
+    } catch (error) {
+        console.log(response);
+    }
+};

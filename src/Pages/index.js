@@ -7,7 +7,7 @@
 // import { Home, Auth } from "pages";
 // 와 같은 식으로 외부에서 쉽게 가져다가 쓸 수 있다. 
 export { default as Home } from "./Home";
-export { default as Auth } from "./Auth";
-export { default as Login } from "./Login";
+export { default as Login } from "./Auth/Login";
+export { default as Signup } from "./Auth/Signup";
 export { default as Dashboard } from "./Dashboard";
 export { default as NotFound } from "./NotFound";

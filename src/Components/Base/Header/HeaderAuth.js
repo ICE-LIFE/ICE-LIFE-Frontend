@@ -28,7 +28,7 @@ const HeaderAuth = () => {
         logout(dispatch);
         navigate("/");
     }
-    
+
     return (
         <>
             {
@@ -37,7 +37,7 @@ const HeaderAuth = () => {
             ) : (
                 <>
                     <Menu to="/login">로그인</Menu>
-                    <Menu to="/">회원가입</Menu>
+                    <Menu to="/signup">회원가입</Menu>
                 </>
             )}
         </>
