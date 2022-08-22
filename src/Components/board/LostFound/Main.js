@@ -2,13 +2,37 @@ import React from 'react';
 
 // css 문법을 사용할 수 있도록 
 import styled from 'styled-components';
-import oc from 'open-color';
+
+
+const MainContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+`;
+
+const HeadTitle = styled.h1`
+    margin-top: 20px;
+    margin-left: 10vw;
+    float: center;
+    padding: 5px 10px;
+    border-radius: 15px;
+
+    font-weight: 600;
+    transition: 0.1s;
+
+    color: var(--color-dark);
+
+`
 
 
 const Writebutton = styled.button`
-    position: relative;
+    float: right;
     padding: 5px 10px;
     border-radius: 15px;
+
+    margin: auto;
+    // 10% , width 기준 
+    margin-right : 10vw;
+    margin-bottom : 35px;
 
     text-decoration: none;
     font-weight: 600;
@@ -27,17 +51,10 @@ const Writebutton = styled.button`
 
 function Main(props) {
     return (
-        <div>
-            <body>
-                <div className="TextBox">
-                    <h1>분실물 센터</h1>
-                </div>
-                <div class="Button_write">
-                    <Writebutton type="button" class="btn btn-outline-success" >글쓰기</Writebutton>
-                </div>
-
-            </body>
-        </div>
+        <MainContainer>
+            <HeadTitle>분실물 센터</HeadTitle>
+            <Writebutton>글쓰기</Writebutton>
+        </MainContainer>
     );
 }
 

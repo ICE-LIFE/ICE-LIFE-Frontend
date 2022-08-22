@@ -25,72 +25,88 @@ const PaginationBox = styled.div`
   ul.pagination li a.active { color: blue; }
 `
 
-const BoardPage = ({postIdx}) => {
-    const [tableData, setTableData] = useState([]);
-    const [page, setPage] = useState(1);
-    const [items, setItems] = useState(5);
+const Table = styled.table`
+  text-align: center;
+  vertical-align: middle;
+  width: 80vw;
+  
 
-    useEffect(() => {
-        // async는 이 부분이 비동기 처리를 하는 곳이라는 것을 알림 
-        (async () => {
-          try {
-            // axios.get이 반환하는 것은 Promise 객체 
-            // await을 붙이면 프로미스가 반환될 때까지 기다린다. 
-            const res = await axios.get(`/board/${postIdx}`);
-            setTableData(res.data.products);
-            console.log(res.data.products);
-          } catch (e) {
-            console.error(e.message)
-          }
-        })();
-      }, [])
+  // 테이블 값을 중앙으로 
+  // 세로방향  | 가로방향 
+  margin: 0 auto;
+`;
 
-      const handlePageChange = (page) => { setPage(page); };
-      
-      return (
-        <>
-          {/* <List items={list}/> */}
-          <div className='table_list'>
-            <table className="table">
-              <thead>
-                <tr>
-                  <th scope="col">No</th>
-                  <th scope="col">제목</th>
-                  <th scope="col">글쓴이</th>
-                  <th scope="col">작성일자</th>
-                </tr>
-              </thead>
-              <tbody className="table-group-divider">
-    
-                {
-                  tableData.slice(
-                    items * (page - 1),
-                    items * (page - 1) + items
-                  ).map((data) => {
-                    return (
-                      <tr key={data.id}>
-                        <th scope="row">{data.id}</th>
-                        <td>{data.title}</td>
-                        <td>{data.nickname}</td>
-                        <td>{data.created_at.substr(0, 10)}</td>
-                      </tr>
-                    );
-                  })
-                }
-              </tbody>
-            </table>
-          </div>
-          <PaginationBox>
-            <Pagination
-              activePage={page}
-              itemsCountPerPage={items}
-              totalItemsCount={tableData.length - 1}
-              pageRangeDisplayed={5}
-              onChange={handlePageChange}>
-            </Pagination>
-          </PaginationBox>
-        </>
-      );
+const Thead = styled.thead`
+  border-style: solid;
+  border-width: 1px 0px 0px 0px;
+  border-color: var(--color-dark);
+`;
+
+const BoardPage = ({ postIdx }) => {
+  const [tableData, setTableData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [items, setItems] = useState(5);
+
+  useEffect(() => {
+    // async는 이 부분이 비동기 처리를 하는 곳이라는 것을 알림 
+    (async () => {
+      try {
+        // axios.get이 반환하는 것은 Promise 객체 
+        // await을 붙이면 프로미스가 반환될 때까지 기다린다. 
+        const res = await axios.get(`/board/${postIdx}`);
+        setTableData(res.data.products);
+        console.log(res.data.products);
+      } catch (e) {
+        console.error(e.message)
+      }
+    })();
+  }, [])
+
+  const handlePageChange = (page) => { setPage(page); };
+
+  return (
+    <>
+      {/* <List items={list}/> */}
+      <div>
+        <Table className="table">
+          <Thead>
+            <tr>
+              {/* th : table head , 테이블의 열  */}
+              <th scope="col">제목</th>
+              <th scope="col">글쓴이</th>
+              <th scope="col">작성일자</th>
+            </tr>
+          </Thead>
+          <tbody className="table-group-divider">
+
+            {
+              tableData.slice(
+                items * (page - 1),
+                items * (page - 1) + items
+              ).map((data) => {
+                return (
+                  <tr style = {{height : "70px"}}key={data.id}>
+                    <td style={{ textAlign: "left", paddingLeft:"50px" }}>{data.title}</td>
+                    <td>{data.nickname}</td>
+                    <td>{data.created_at.substr(0, 10)}</td>
+                  </tr>
+                );
+              })
+            }
+          </tbody>
+        </Table>
+      </div>
+      <PaginationBox>
+        <Pagination
+          activePage={page}
+          itemsCountPerPage={items}
+          totalItemsCount={tableData.length - 1}
+          pageRangeDisplayed={5}
+          onChange={handlePageChange}>
+        </Pagination>
+      </PaginationBox>
+    </>
+  );
 
 
 
