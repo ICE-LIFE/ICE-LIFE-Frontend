@@ -3,15 +3,21 @@ const { createProxyMiddleware } = require("http-proxy-middleware")
 module.exports = function (app) {
 	app.use(
 		"/api",
-		createProxyMiddleware({
-			target: "http://localhost:4000",
+		createProxyMiddleware(['/v1', '/v2'], {
+			target: "https://home.astro36.me",
 			changeOrigin: true,
+			router: {
+				'/v2': process.env.REACT_APP_V2_URL
+			},
+			pathRewrite: {
+				'^/v2': ''
+			}
 		})
 	)
 	app.use(
 		"/board",
 		createProxyMiddleware({
-			target: "http://localhost:4000",
+			target: "https://home.astro36.me",
 			changeOrigin: true,
 		})
 	)
