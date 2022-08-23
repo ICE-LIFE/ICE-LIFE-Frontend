@@ -7,16 +7,18 @@ const Banner = styled.div`
 `;
 
 const Img = styled.img`
-    //width: 100%;
-    height: 360px;
     object-fit: fill;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
 `;
 
 const Preview = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin-top: 70px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 40px;
+    max-width: 1200px;
+    margin: 60px auto;
 `;
 
 const PreviewHeader = styled.div`
@@ -24,17 +26,14 @@ const PreviewHeader = styled.div`
     font-weight: bold;
 `;
 
-const BoardPreview = styled.div`
-    margin-left: 100px;
-    margin-right: 100px;
-`;
+const BoardPreview = styled.div``;
 
 const PostListPreview = styled.div`
     border: 1px solid black;
-    padding-top: 100px;
-    padding-bottom: 100px;
-    padding-left: 100px;
-    padding-right: 100px;
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 const Home = () => {

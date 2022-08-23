@@ -27,6 +27,7 @@ const HeaderContents = styled.div`
     height: 55px;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
 
     padding-right: 1rem;
@@ -49,20 +50,19 @@ const Logo = styled(Link)`
     font-family: 'Rajdhani';
 `;
 
+const MenuListWrapper = styled.div``;
+
 // 중간 공간
-const Spacer = styled.div`
+const MenuList = styled.div`
     display: flex;
-    flex-grow: 1;
     text-align: center;
-    padding-left: 10rem;
-    padding-right: 10rem;
 `;
 
 const Menu = styled(Link)`
     text-decoration: none;
     flex-direction: row;
-    flex-grow: 1;
     color: black;
+    margin: 0 10px;
     
     // 방문한 페이지
     :visited {
@@ -87,13 +87,17 @@ const Header = () => {
             <WhiteBackground>
                 <HeaderContents>
                     <Logo to="/" >정통마켓</Logo>
-                    <Spacer>
-                        <Menu to="/">중고 거래</Menu>
-                        <Menu to="/lostfound">분실물 센터</Menu>
-                        <Menu to="/">복지물품 대여</Menu>
-                        <Menu to="/Notice">학생회 공지</Menu>
-                    </Spacer>
-                    <HeaderAuth />
+                    <MenuListWrapper>
+                        <MenuList>
+                            <Menu to="/">중고 거래</Menu>
+                            <Menu to="/lostfound">분실물 센터</Menu>
+                            <Menu to="/">복지물품 대여</Menu>
+                            <Menu to="/Notice">학생회 공지</Menu>
+                        </MenuList>
+                    </MenuListWrapper>
+                    <MenuListWrapper>
+                        <HeaderAuth />
+                    </MenuListWrapper>
                 </HeaderContents>
             </WhiteBackground>
             <GradientBorder />
