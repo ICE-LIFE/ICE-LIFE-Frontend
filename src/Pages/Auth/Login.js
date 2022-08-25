@@ -19,12 +19,12 @@ const FormHeader = styled.h1`
     margin-bottom: 1.5rem;
 `;
 
-const LoginForm = styled.div`
+const Form = styled.form`
     border: 2px solid black;
     padding: 3rem 2rem;
 `;
 
-const LoginFormItem = styled.div`
+const FormItem = styled.div`
     display: flex;
     gap: 1rem;
     flex-wrap:wrap; 
@@ -53,12 +53,15 @@ const FormButton = styled.button`
     display: block;
     width: 10rem;
     height: 3rem;
-    text-align: center;
     margin: 1rem auto 0;
     border: 2px solid black;
     border-radius: 0.25rem;
-    background-color: ${props => props.color ? "#8fd14f" : "white"};
+    background-color: ${props => props.colored ? "#8fd14f" : "white"};
     font-weight: bold;
+
+    :hover {
+        background-color: ${props => props.colored ? "#83bf4a" : "#f5f5f5"};
+    }
 `
 
 const Spacer = styled.div`
@@ -89,22 +92,19 @@ const Login = () => {
         <Container>
             <FormContainer>
                 <FormHeader>로그인</FormHeader>
-
-                <form>
-                    <LoginForm>
-                        <LoginFormItem>
-                            <FromLabel htmlFor="email">이메일</FromLabel>
-                            <FormInput type="text" id={"email"} value={email} onChange={e => setEmail(e.target.value)} />
-                        </LoginFormItem>
-                        <LoginFormItem>
-                            <FromLabel htmlFor="password">비밀번호</FromLabel>
-                            <FormInput type="password" id={"password"} value={password} onChange={e => setPassword(e.target.value)} />
-                        </LoginFormItem>
-                        <Spacer/>
-                        <FormButton color={true} onClick={handleLogin}>로그인</FormButton>
-                        <FormButton>회원가입</FormButton>
-                    </LoginForm>
-                </form>
+                <Form>
+                    <FormItem>
+                        <FromLabel htmlFor="email">이메일</FromLabel>
+                        <FormInput type="text" id={"email"} value={email} onChange={e => setEmail(e.target.value)} />
+                    </FormItem>
+                    <FormItem>
+                        <FromLabel htmlFor="password">비밀번호</FromLabel>
+                        <FormInput type="password" id={"password"} value={password} onChange={e => setPassword(e.target.value)} />
+                    </FormItem>
+                    <Spacer />
+                    <FormButton onClick={handleLogin} colored>로그인</FormButton>
+                    <FormButton>회원가입</FormButton>
+                </Form>
             </FormContainer>
         </Container>
     );
