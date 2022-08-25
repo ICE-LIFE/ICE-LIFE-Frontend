@@ -42,8 +42,8 @@ const SignUp = () => {
 
         let payload = { name, studentId, password1, password2, nickname, email };
         try {
-            const response = await signUpUser(dispatch, payload);
-            if (!response) return;
+            const response = await signUpUser(payload);
+            if (response == "retry") return;
             navigate("/");
         } catch (error) {
             console.error(e);

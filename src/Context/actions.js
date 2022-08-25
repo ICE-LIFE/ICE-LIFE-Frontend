@@ -31,7 +31,7 @@ export const logout = async dispatch => {
 };
 
 
-export const signUpUser = async (dispatch, signUpPayload) => {
+export const signUpUser = async signUpPayload => {
     const frm = new FormData();
     frm.append("name", signUpPayload.name);
     frm.append("id", signUpPayload.studentId);
@@ -40,16 +40,27 @@ export const signUpUser = async (dispatch, signUpPayload) => {
     frm.append("nickname", signUpPayload.nickname);
     frm.append("email", signUpPayload.email);
 
-    const response = null;
-    try {
-        response = await axios.post("/signup", frm, { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true });
+    const formElement = ["이름", "학번", "비밀번호", "비밀번호 확인", "별명", "이메일"];
+    
+    // 재입력 로직
+    if (signUpPayload.name === null) {
+        alert(`${formElement}을 입력해주세요!`);
+        return "retry";
+    }
 
+
+    if (signUpPayload.password1 != signUpPayload.password2) {
+        alert("비밀번호와 비밀번호 확인이 맞지 않습니다.");
+        return "retry";
+    }
+
+
+    try {
+        const response = await axios.post("/signup", frm, { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true });
         if (response.status === 200) {
-            
-            dispatch({ type: "SIGNUP_SUCCESS" })
             return response.data;
         }
     } catch (error) {
-        console.log(response);
+        alert(`에러코드 ${error}로 인해 회원가입이 실패하였습니다.\n새로고침 후 다시 시도해주세요!`);
     }
 };
