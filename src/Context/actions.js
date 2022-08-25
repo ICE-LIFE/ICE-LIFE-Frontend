@@ -44,7 +44,7 @@ export const signUpUser = async signUpPayload => {
     
     // 재입력 로직
     if (signUpPayload.name === null) {
-        alert(`${formElement}을 입력해주세요!`);
+        alert(`${formElement}을(를) 입력해주세요!`);
         return "retry";
     }
 
