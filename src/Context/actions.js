@@ -1,4 +1,5 @@
 import axios from "axios";
+import { josa } from "josa";
 import "url-search-params-polyfill";
 
 // 컨텍스트 값 업데이트를 위한 함수들
@@ -40,16 +41,26 @@ export const signUpUser = async signUpPayload => {
     frm.append("nickname", signUpPayload.nickname);
     frm.append("email", signUpPayload.email);
 
-    const formElement = ["이름", "학번", "비밀번호", "비밀번호 확인", "별명", "이메일"];
+    const formElement = {
+        name: "이름",
+        studentId: "학번",
+        password1: "비밀번호",
+        password2: "비밀번호 확인",
+        nickname: "별명",
+        email: "이메일",
+    };
     
     // 재입력 로직
-    if (signUpPayload.name === null) {
-        alert(`${formElement}을(를) 입력해주세요!`);
-        return "retry";
+    const keys = Object.keys(signUpPayload);
+    for (let i = 0; i < keys.length; ++i) {
+        const key = keys[i] // 각각의 키
+        if (signUpPayload[key] === "") {
+            alert(josa(`${formElement[key]}#{을} 입력해주세요!`));
+            return "retry";
+        }
     }
 
-
-    if (signUpPayload.password1 != signUpPayload.password2) {
+    if (signUpPayload.password1 !== signUpPayload.password2) {
         alert("비밀번호와 비밀번호 확인이 맞지 않습니다.");
         return "retry";
     }
@@ -61,6 +72,10 @@ export const signUpUser = async signUpPayload => {
             return response.data;
         }
     } catch (error) {
-        alert(`에러코드 ${error}로 인해 회원가입이 실패하였습니다.\n새로고침 후 다시 시도해주세요!`);
+        if (error.response.status === 500)
+            alert("이미 가입된 회원입니다!");
+        else
+            alert(`에러코드 ${error}로 인해 회원가입이 실패하였습니다.\n새로고침 후 다시 시도해주세요!`);
+        return "retry";
     }
 };

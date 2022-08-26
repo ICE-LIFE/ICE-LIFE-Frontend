@@ -103,7 +103,7 @@ const Login = () => {
                     </FormItem>
                     <Spacer />
                     <FormButton onClick={handleLogin} colored>로그인</FormButton>
-                    <FormButton>회원가입</FormButton>
+                    <FormButton onClick={e => { e.preventDefault(); navigate("/signup"); }}>회원가입</FormButton>
                 </Form>
             </FormContainer>
         </Container>

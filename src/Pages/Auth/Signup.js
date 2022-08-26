@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useAuthDispatch, signUpUser } from "Context";
+import { signUpUser } from "Context";
 
 const Container = styled.div`
     margin: 0 auto;
@@ -75,7 +75,6 @@ const Spacer = styled.div`
 `
 
 const SignUp = () => {
-    const dispatch = useAuthDispatch();
     const navigate = useNavigate();
 
     const [name, setName] = useState("");           // 이름
@@ -91,12 +90,14 @@ const SignUp = () => {
         let payload = { name, studentId, password1, password2, nickname, email };
         try {
             const response = await signUpUser(payload);
-            if (response == "retry") return;
+            if (response === "retry") return;
             navigate("/");
         } catch (error) {
             console.error(e);
         }
     };
+    
+    
 
     return (
         <Container>
@@ -129,7 +130,7 @@ const SignUp = () => {
                     </FormItem>
                     <Spacer />
                     <FormButtonGroup>
-                        <FormButton>취소</FormButton>
+                        <FormButton onClick={e => { e.preventDefault(); navigate("/"); }}>취소</FormButton>
                         <FormButton onClick={handleSignUp} colored>회원가입</FormButton>
                     </FormButtonGroup>
                 </Form>
