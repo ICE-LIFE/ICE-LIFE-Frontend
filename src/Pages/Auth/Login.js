@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useAuthDispatch, loginUser } from "Context";
 
@@ -8,9 +8,6 @@ const Container = styled.div`
     max-width: 500px;
     margin-top: 60px;
     padding: 1.5rem;
-`;
-
-const FormContainer = styled.div`
 `;
 
 const FormHeader = styled.h1`
@@ -22,6 +19,7 @@ const FormHeader = styled.h1`
 const Form = styled.form`
     border: 2px solid black;
     padding: 3rem 2rem;
+    text-align: center;
 `;
 
 const FormItem = styled.div`
@@ -31,7 +29,8 @@ const FormItem = styled.div`
     margin-bottom: 1rem;
 `;
 
-const FromLabel = styled.label`
+const FormLabel = styled.label`
+    text-align: left;
     width: 5rem;
     font-weight: bold;
 `
@@ -62,11 +61,27 @@ const FormButton = styled.button`
     :hover {
         background-color: ${props => props.colored ? "#83bf4a" : "#f5f5f5"};
     }
-`
+`;
 
 const Spacer = styled.div`
     height: 1rem;
-`
+`;
+
+const FindPw = styled(Link)`
+    text-decoration: none;
+
+    color: black;
+    font-size: 0.9rem;
+    margin-top: 2.2rem;
+    
+    :visited {
+        color: black;
+    }
+
+    :hover {
+        color: black;
+    }
+`;
 
 const Login = () => {
     const dispatch = useAuthDispatch();
@@ -90,22 +105,22 @@ const Login = () => {
 
     return (
         <Container>
-            <FormContainer>
-                <FormHeader>로그인</FormHeader>
-                <Form>
-                    <FormItem>
-                        <FromLabel htmlFor="email">이메일</FromLabel>
-                        <FormInput type="text" id={"email"} value={email} onChange={e => setEmail(e.target.value)} />
-                    </FormItem>
-                    <FormItem>
-                        <FromLabel htmlFor="password">비밀번호</FromLabel>
-                        <FormInput type="password" id={"password"} value={password} onChange={e => setPassword(e.target.value)} />
-                    </FormItem>
-                    <Spacer />
-                    <FormButton onClick={handleLogin} colored>로그인</FormButton>
-                    <FormButton onClick={e => { e.preventDefault(); navigate("/signup"); }}>회원가입</FormButton>
-                </Form>
-            </FormContainer>
+            <FormHeader>로그인</FormHeader>
+            <Form>
+                <FormItem>
+                    <FormLabel htmlFor="email">이메일</FormLabel>
+                    <FormInput type="text" id={"email"} value={email} onChange={e => setEmail(e.target.value)} />
+                </FormItem>
+                <FormItem>
+                    <FormLabel htmlFor="password">비밀번호</FormLabel>
+                    <FormInput type="password" id={"password"} value={password} onChange={e => setPassword(e.target.value)} />
+                </FormItem>
+                <Spacer />
+                <FormButton onClick={handleLogin} colored>로그인</FormButton>
+                <FormButton onClick={e => { e.preventDefault(); navigate("/signup"); }}>회원가입</FormButton>
+                <Spacer />
+                <FindPw to="/findpw">비밀번호 찾기</FindPw>
+            </Form>
         </Container>
     );
 };

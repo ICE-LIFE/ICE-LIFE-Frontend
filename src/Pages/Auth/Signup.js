@@ -10,9 +10,6 @@ const Container = styled.div`
     padding: 1.5rem;
 `;
 
-const FormContainer = styled.div`
-`;
-
 const FormHeader = styled.h1`
     font-size: 2rem;
     text-align: center;
@@ -96,45 +93,43 @@ const SignUp = () => {
             console.error(e);
         }
     };
-    
-    
+
+
 
     return (
         <Container>
-            <FormContainer>
-                <FormHeader>회원가입</FormHeader>
-                <Form>
-                    <FormItem>
-                        <FromLabel htmlFor="name">이름</FromLabel>
-                        <FormInput type="text" id={"name"} value={name} onChange={e => setName(e.target.value)} />
-                    </FormItem>
-                    <FormItem>
-                        <FromLabel htmlFor="studentId">학번</FromLabel>
-                        <FormInput type="number" id={"studentId"} value={studentId} onChange={e => setStudentId(e.target.value)} />
-                    </FormItem>
-                    <FormItem>
-                        <FromLabel htmlFor="password">비밀번호</FromLabel>
-                        <FormInput type="password" id={"password1"} value={password1} onChange={e => setPassword1(e.target.value)} />
-                    </FormItem>
-                    <FormItem>
-                        <FromLabel htmlFor="email">비밀번호 확인</FromLabel>
-                        <FormInput type="password" id={"password2"} value={password2} onChange={e => setPassword2(e.target.value)} />
-                    </FormItem>
-                    <FormItem>
-                        <FromLabel htmlFor="nickname">별명</FromLabel>
-                        <FormInput type="text" id={"nickname"} value={nickname} onChange={e => setNickname(e.target.value)} />
-                    </FormItem>
-                    <FormItem>
-                        <FromLabel htmlFor="email">이메일</FromLabel>
-                        <FormInput type="text" id={"email"} value={email} onChange={e => setEmail(e.target.value)} />
-                    </FormItem>
-                    <Spacer />
-                    <FormButtonGroup>
-                        <FormButton onClick={e => { e.preventDefault(); navigate("/"); }}>취소</FormButton>
-                        <FormButton onClick={handleSignUp} colored>회원가입</FormButton>
-                    </FormButtonGroup>
-                </Form>
-            </FormContainer>
+            <FormHeader>회원가입</FormHeader>
+            <Form>
+                <FormItem>
+                    <FromLabel htmlFor="name">이름</FromLabel>
+                    <FormInput type="text" id={"name"} value={name} onChange={e => setName(e.target.value)} />
+                </FormItem>
+                <FormItem>
+                    <FromLabel htmlFor="studentId">학번</FromLabel>
+                    <FormInput type="number" id={"studentId"} value={studentId} onChange={e => setStudentId(e.target.value)} />
+                </FormItem>
+                <FormItem>
+                    <FromLabel htmlFor="password">비밀번호</FromLabel>
+                    <FormInput type="password" id={"password1"} value={password1} onChange={e => setPassword1(e.target.value)} />
+                </FormItem>
+                <FormItem>
+                    <FromLabel htmlFor="email">비밀번호 확인</FromLabel>
+                    <FormInput type="password" id={"password2"} value={password2} onChange={e => setPassword2(e.target.value)} />
+                </FormItem>
+                <FormItem>
+                    <FromLabel htmlFor="nickname">별명</FromLabel>
+                    <FormInput type="text" id={"nickname"} value={nickname} onChange={e => setNickname(e.target.value)} />
+                </FormItem>
+                <FormItem>
+                    <FromLabel htmlFor="email">이메일</FromLabel>
+                    <FormInput type="text" id={"email"} value={email} onChange={e => setEmail(e.target.value)} />
+                </FormItem>
+                <Spacer />
+                <FormButtonGroup>
+                    <FormButton onClick={e => { e.preventDefault(); navigate("/"); }}>취소</FormButton>
+                    <FormButton onClick={handleSignUp} colored>회원가입</FormButton>
+                </FormButtonGroup>
+            </Form>
         </Container>
     );
 };
