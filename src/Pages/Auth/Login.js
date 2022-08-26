@@ -4,27 +4,69 @@ import styled from "styled-components";
 import { useAuthDispatch, loginUser } from "Context";
 
 const Container = styled.div`
-    display: flex;
-    min-height: 100vh;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
+    margin: 0 auto;
+    max-width: 500px;
+    margin-top: 60px;
+    padding: 1.5rem;
 `;
 
 const FormContainer = styled.div`
-    width: 200px;
 `;
 
-const LoginForm = styled.div`
-    display: flex;
-    flex-direction: column;
+const FormHeader = styled.h1`
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
 `;
 
-const LoginFormItem = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
+const Form = styled.form`
+    border: 2px solid black;
+    padding: 3rem 2rem;
 `;
+
+const FormItem = styled.div`
+    display: flex;
+    gap: 1rem;
+    flex-wrap:wrap; 
+    margin-bottom: 1rem;
+`;
+
+const FromLabel = styled.label`
+    width: 5rem;
+    font-weight: bold;
+`
+
+const FormInput = styled.input`
+    flex-grow: 1;
+    border: none;
+    border-bottom: 1px solid black;
+    padding-bottom: 1px;
+
+    :focus {
+        outline: none;
+        border-bottom: 2px solid green;
+        padding-bottom: 0;
+    }
+`;
+
+const FormButton = styled.button`
+    display: block;
+    width: 10rem;
+    height: 3rem;
+    margin: 1rem auto 0;
+    border: 2px solid black;
+    border-radius: 0.25rem;
+    background-color: ${props => props.colored ? "#8fd14f" : "white"};
+    font-weight: bold;
+
+    :hover {
+        background-color: ${props => props.colored ? "#83bf4a" : "#f5f5f5"};
+    }
+`
+
+const Spacer = styled.div`
+    height: 1rem;
+`
 
 const Login = () => {
     const dispatch = useAuthDispatch();
@@ -49,21 +91,20 @@ const Login = () => {
     return (
         <Container>
             <FormContainer>
-                <h1>로그인</h1>
-
-                <form>
-                    <LoginForm>
-                        <LoginFormItem>
-                            <label htmlFor="email">이메일</label>
-                            <input type="text" id={"email"} value={email} onChange={e => setEmail(e.target.value)} />
-                        </LoginFormItem>
-                        <LoginFormItem>
-                            <label htmlFor="password">비밀번호</label>
-                            <input type="password" id={"password"} value={password} onChange={e => setPassword(e.target.value)} />
-                        </LoginFormItem>
-                    </LoginForm>
-                    <button onClick={handleLogin}>로그인</button>
-                </form>
+                <FormHeader>로그인</FormHeader>
+                <Form>
+                    <FormItem>
+                        <FromLabel htmlFor="email">이메일</FromLabel>
+                        <FormInput type="text" id={"email"} value={email} onChange={e => setEmail(e.target.value)} />
+                    </FormItem>
+                    <FormItem>
+                        <FromLabel htmlFor="password">비밀번호</FromLabel>
+                        <FormInput type="password" id={"password"} value={password} onChange={e => setPassword(e.target.value)} />
+                    </FormItem>
+                    <Spacer />
+                    <FormButton onClick={handleLogin} colored>로그인</FormButton>
+                    <FormButton>회원가입</FormButton>
+                </Form>
             </FormContainer>
         </Container>
     );
