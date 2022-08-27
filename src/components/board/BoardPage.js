@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import Pagination from 'react-js-pagination'
+import NoticeView from './NoticeView';
+import { Link } from "react-router-dom";
 
 const PaginationBox = styled.div`
   .pagination { display: flex; justify-content: center; margin-top: 15px;}
@@ -85,8 +87,8 @@ const BoardPage = ({ postIdx }) => {
                 items * (page - 1) + items
               ).map((data) => {
                 return (
-                  <tr style = {{height : "70px"}}key={data.id}>
-                    <td style={{ textAlign: "left", paddingLeft:"50px" }}>{data.title}</td>
+                  <tr style={{ height: "70px" }} key={data.id}>
+                    <td style={{ textAlign: "left", paddingLeft: "50px" }}> <Link to="/notice/noticeview">{data.title}</Link></td>
                     <td>{data.nickname}</td>
                     <td>{data.created_at.substr(0, 10)}</td>
                   </tr>

@@ -1,14 +1,12 @@
+import Search from "./Search";
+import BoardPage from "./BoardPage";
 import Main from "./Main";
-import Search from "../Search";
-import BoardPage from "../BoardPage";
 
 const LostFound = () => {
     return (
         <>
-            <Main />
-
+            <Main title={"분실물 센터"} />
             <BoardPage postIdx={1} />
-
             <Search />
         </>
     );

@@ -1,5 +1,3 @@
-import React from 'react';
-
 // css 문법을 사용할 수 있도록 
 import styled from 'styled-components';
 
@@ -21,8 +19,7 @@ const HeadTitle = styled.h1`
 
     color: var(--color-dark);
 
-`
-
+`;
 
 const Writebutton = styled.button`
     float: right;
@@ -41,21 +38,22 @@ const Writebutton = styled.button`
     border: none;
     color: #ffffff;
     background : #1E21CB;
+
     :hover {
         letter-spacing: 1px;
         transform: scale(1.05);
         cursor: pointer;
-}
-`
+    }
+`;
 
 
-function Main(props) {
+const Main = props => {
     return (
         <MainContainer>
-            <HeadTitle>분실물 센터</HeadTitle>
+            <HeadTitle>{props.title}</HeadTitle>
             <Writebutton>글쓰기</Writebutton>
         </MainContainer>
     );
-}
+};
 
 export default Main;
