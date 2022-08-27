@@ -21,7 +21,6 @@ export const useAuthState = () => {
     if (context === undefined) {
         throw new Error("useAuthState는 AuthProvider 안에서만 사용 가능합니다.");
     }
-
     return context;
 };
 
