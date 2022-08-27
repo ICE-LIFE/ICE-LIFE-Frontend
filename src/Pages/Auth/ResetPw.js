@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -19,6 +19,13 @@ margin-bottom: 1.5rem;
 const Form = styled.form`
 border: 2px solid black;
 padding: 3rem 2rem;
+`;
+
+const FormItem = styled.div`
+    display: flex;
+    gap: 1rem;
+    flex-wrap:wrap; 
+    margin-bottom: 1rem;
 `;
 
 const FormLabel = styled.label`
@@ -68,11 +75,11 @@ const ResetPw = () => {
 
     const handleResetPw = async e => {
         e.preventDefault();
-        if (password1 !== password2) {
-            alert("비밀번호와 비밀번호 확인이 서로 다릅니다.");
-            return;
-        }
-        
+        // if (password1 !== password2) {
+        //     alert("비밀번호와 비밀번호 확인이 서로 다릅니다.");
+        //     return;
+        // }
+
         const frm = new FormData();
         frm.append("email", state.email);
         frm.append("password1", password1);
@@ -80,10 +87,11 @@ const ResetPw = () => {
         (async () => {
             try {
                 const response = await axios.post("/resetpw", frm, { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true });
-                
-                // if (response !== "수정예정") {
-                //     navigate("/");
-                // }
+                if (response.data.indexOf("error") !== -1) {
+                    alert("잘못된 비밀번호입니다.");
+                    return;
+                }
+                alert("비밀번호 변경 완료!");
                 navigate("/");
             } catch (error) {
                 console.log(error);
@@ -98,10 +106,14 @@ const ResetPw = () => {
             <FormHeader>비밀번호 초기화</FormHeader>
             <Form>
                 <p>변경하실 비밀번호를 입력해주세요.</p>
-                <FormLabel htmlFor="password1">비밀번호</FormLabel>
-                <FormInput type="password" id={"password1"} value={password1} onChange={e => setPassword1(e.target.value)} />
-                <FormLabel htmlFor="password2">비밀번호 확인</FormLabel>
-                <FormInput type="password" id={"password2"} value={password2} onChange={e => setPassword2(e.target.value)} />
+                <FormItem>
+                    <FormLabel htmlFor="password1">비밀번호</FormLabel>
+                    <FormInput type="password" id={"password1"} value={password1} onChange={e => setPassword1(e.target.value)} />
+                </FormItem>
+                <FormItem>
+                    <FormLabel htmlFor="password2">비밀번호 확인</FormLabel>
+                    <FormInput type="password" id={"password2"} value={password2} onChange={e => setPassword2(e.target.value)} />
+                </FormItem>
                 <Spacer />
                 <FormButton onClick={handleResetPw}>확인</FormButton>
             </Form>

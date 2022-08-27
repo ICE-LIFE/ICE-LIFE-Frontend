@@ -63,25 +63,28 @@ const FormButton = styled.button`
 const FindPw = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
-    const [nickname, setNickname] = useState("");
+    const [disable, setDisable] = useState(false);
 
     const handleFindPw = async e => {
         e.preventDefault();
+        if (disable === true) return;
+        setDisable(true);
         const frm = new FormData();
         frm.append("email", email + "@inha.edu");
-        frm.append("nickname", nickname);
 
         (async () => {
             try {
                 const response = await axios.post("/findpw", frm, { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true });
-                // if (response !== "수정예정") {
-                //     navigate("/");
-                // }
-                // 수정 예정
-                // navigate("/findpwcode", { state: { email: email + "@inha.edu" } });
-                navigate("/findpw", { state: { email: email + "@inha.edu" } });
+                console.log(response);
+                if (response.data === "redirect:/findpw") {
+                    alert("존재하지 않는 아이디입니다.\n다시 확인해주세요.");
+                    setDisable(false);
+                    return;
+                }
+                navigate("/findpwcode", { state: { email: email + "@inha.edu" } });
             } catch (error) {
                 alert("입력 내용을 다시 확인해주세요!");
+                setDisable(false);
             }
         })();
     };
@@ -96,15 +99,13 @@ const FindPw = () => {
             <Form>
                 <p>
                     회원가입 시 등록하신 학교 계정 주소를 입력해 주세요.<br />
-                    해당 이메일 주소로 비밀번호 재설정 링크를 보내드립니다.
+                    해당 이메일 주소로 비밀번호 재설정 코드를 보내드립니다.
                 </p>
                 <FormLabel htmlFor="email">학교 계정 메일</FormLabel>
                 <FormInput type="text" id={"email"} value={email} onChange={e => setEmail(e.target.value)} /> @inha.edu
-                <FormLabel htmlFor="nickname">별명</FormLabel>
-                <FormInput type="text" id={"nickname"} value={nickname} onChange={e => setNickname(e.target.value)}></FormInput>
                 <Spacer />
                 <ReCAPTCHA sitekey={process.env.REACT_APP_SITE_KEY} onChange={onChange} />
-                <FormButton onClick={handleFindPw} colored>확인</FormButton>
+                <FormButton onClick={handleFindPw} disable={disable} colored>확인</FormButton>
             </Form>
         </Container>
     );

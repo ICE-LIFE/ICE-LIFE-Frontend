@@ -21,6 +21,13 @@ const Form = styled.form`
     padding: 3rem 2rem;
 `;
 
+const FormItem = styled.div`
+    display: flex;
+    gap: 1rem;
+    flex-wrap:wrap; 
+    margin-bottom: 1rem;
+`;
+
 const FormLabel = styled.label`
     text-align: left;
     width: 6rem;
@@ -59,39 +66,46 @@ const FormButton = styled.button`
     }
 `;
 
-const AuthButton = styled.button`
-    width: 5rem;
-    border-radius: 0.25rem;
-    background-color: white;
-    font-size: 0.9rem;
-    font-weight: bold;
-
-    :hover {
-        background-color: #f5f5f5;
-    }
-`;
-
 
 const FindPwCode = () => {
+    const navigate = useNavigate();
     const { state } = useLocation();
-    const [email, setEmail] = useState("");
+    const [code, setCode] = useState("");
 
-    const handleSandCode = async e => {
+    const handleCodeCheck = async e => {
         e.preventDefault();
-        
+
+        const frm = new FormData();
+        frm.append("email", state.email)
+        frm.append("validcode", code);
+
+        try {
+            const response = await axios.post("/pwvalidcheck", frm, { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true });
+            if (response.data === "redirect:/findpw") {
+                alert("코드가 맞지 않습니다.\n다시 확인해주세요.");
+                return;
+            }
+            navigate("/resetpw", { state: { email: state.email } });
+        } catch (error) {
+            console.log("test");
+        }
+
     };
 
     return (
         <Container>
             <FormHeader>이메일 인증</FormHeader>
             <Form>
-                <FormLabel htmlFor="email">email</FormLabel>
-                <FormInput type="text" id={"email"} value={state.email} disabled />
-                <AuthButton onClick={handleSandCode}>코드 발송</AuthButton>
-                <FormLabel htmlFor="code">인증 코드</FormLabel>
-                <FormInput type="text" id={"code"} onChange={e => setEmail(e.target.value)} />
+                <FormItem>
+                    <FormLabel htmlFor="email">email</FormLabel>
+                    <FormInput type="text" id={"email"} value={state.email} disabled />
+                </FormItem>
+                <FormItem>
+                    <FormLabel htmlFor="code">인증 코드</FormLabel>
+                    <FormInput type="text" id={"code"} onChange={e => setCode(e.target.value)} />
+                </FormItem>
                 <Spacer />
-                <FormButton>확인</FormButton>
+                <FormButton onClick={handleCodeCheck} colored>확인</FormButton>
             </Form>
         </Container>
     );
