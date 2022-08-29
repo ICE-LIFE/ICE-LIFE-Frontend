@@ -96,6 +96,7 @@ const Login = () => {
         let payload = { email, password };
         try {
             const response = await loginUser(dispatch, payload);
+            
             if (!response) return;
             navigate("/dashboard");
         } catch (e) {

@@ -6,6 +6,7 @@ import { useAuthState } from "Context";
 import CloseIcon from '@mui/icons-material/Close';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import usePushNotification from "Hooks/usePushNotification";
 
 const Container = styled.div`
     position: fixed;
@@ -43,7 +44,9 @@ const Chat = () => {
     const userInfo = useAuthState();
     const accessToken = userInfo.token || "";
     const email = userInfo.user || "";
+    const userIdNum = userInfo.userIdNum || 0;
 
+    const triggerNotify = usePushNotification();
 
     const ROOM_SEQ = useRef(0); // room_id
     const client = useRef({});
@@ -100,6 +103,8 @@ const Chat = () => {
     // 채팅방 입장
     const subscribe = () => {
         client.current.subscribe(`/user/${email}/topic/room/${ROOM_SEQ.current}`, ({ body }) => {
+            if (JSON.parse(body).from !== userIdNum)
+                triggerNotify("채팅 알림", { body: `${JSON.parse(body).content}` });
             setChatMessages(_chatMessages => [..._chatMessages, body]);
         });
     };

@@ -14,8 +14,11 @@ export const loginUser = async (dispatch, loginPayload) => {
     try {
         const response = await axios.post(`/login?${params}`);
         if (response.status === 200) {
-            dispatch({ type: "LOGIN_SUCCESS", payload: { user: loginPayload.email, auth_token: response.data } });
-            localStorage.setItem("currentUser", JSON.stringify({ user: loginPayload.email, auth_token: response.data }));
+            const userInfo = await axios.get("/whoami", { headers: { "Authorization": `Bearer ${response.data}` } });
+            const userIdNum = Number(userInfo.data.substr(userInfo.data.indexOf("Id") + 5, 8));
+            dispatch({ type: "LOGIN_SUCCESS", payload: { user: loginPayload.email, auth_token: response.data, userIdNum: userIdNum } });
+            localStorage.setItem("currentUser", JSON.stringify({ user: loginPayload.email, auth_token: response.data, userIdNum: userIdNum }));
+
             return response.data;
         } else {
             dispatch({ type: "LOGIN_ERROR", error: response.data.error[0] });

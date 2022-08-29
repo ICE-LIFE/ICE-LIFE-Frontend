@@ -1,10 +1,12 @@
 let user = localStorage.getItem("currentUser") ? JSON.parse(localStorage.getItem("currentUser")).user : "";
 let token = localStorage.getItem("currentUser") ? JSON.parse(localStorage.getItem("currentUser")).auth_token : "";
+let userIdNum = localStorage.getItem("currentUser") ? JSON.parse(localStorage.getItem("currentUser")).userIdNum : 0;
 
 // 하위 컴포넌트에 컨텍스트로 넘길 객체
 export const initialState = {
     user: "" || user,
     token: "" || token,
+    userIdNum: 0 || userIdNum,
     errorMessage: null
 };
 
@@ -15,13 +17,15 @@ export const AuthReducer = (initialState, action) => {
             return {
                 ...initialState,
                 user: action.payload.user,
-                token: action.payload.auth_token
+                token: action.payload.auth_token,
+                userIdNum: action.payload.userIdNum,
             }
         case "LOGOUT":
             return {
                 ...initialState,
                 user: "",
-                token: ""
+                token: "",
+                userIdNum: 0,
             }
         case "LOGIN_ERROR":
             return {
