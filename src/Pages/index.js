@@ -11,7 +11,7 @@ export { default as Home } from "./Home";
 export { default as Login } from "./Auth/Login";
 export { default as Signup } from "./Auth/Signup";
 export { default as FindPw } from "./Auth/FindPw";
-export { default as FindPwCode} from "./Auth/FindPwCode";
+export { default as FindPwCode } from "./Auth/FindPwCode";
 export { default as ResetPw } from "./Auth/ResetPw";
 export { default as Dashboard } from "./Dashboard";
 export { default as NotFound } from "./NotFound";
