@@ -4,6 +4,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "App";
 import { BrowserRouter } from "react-router-dom";
+import { AuthProvider } from "Context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -11,6 +12,8 @@ root.render(
     // 자세한건 https://velog.io/@wiostz98kr/TIL49-l-React-%EB%A6%AC%EC%95%A1%ED%8A%B8-%EB%9D%BC%EC%9A%B0%ED%84%B0React-Router-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0-Feat.-SPA
     // 위의 링크 참조
     <BrowserRouter>
-        <App />
+        <AuthProvider>
+            <App />
+        </AuthProvider>
     </BrowserRouter>
 );
