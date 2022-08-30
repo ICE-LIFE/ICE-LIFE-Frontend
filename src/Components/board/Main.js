@@ -1,18 +1,22 @@
-// css 문법을 사용할 수 있도록 
+import { useParams } from "react-router-dom";
 import styled from 'styled-components';
 
 
 const MainContainer = styled.div`
     display: flex;
-    flex-direction: column;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    margin-bottom: 40px;
+    border: 3px solid black;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
 `;
 
 const HeadTitle = styled.h1`
-    margin-top: 20px;
-    margin-left: 10vw;
+    margin-left: 3vw;
     float: center;
-    padding: 5px 10px;
-    border-radius: 15px;
+    padding: 20px 10px;
 
     font-weight: 600;
     transition: 0.1s;
@@ -28,8 +32,7 @@ const Writebutton = styled.button`
 
     margin: auto;
     // 10% , width 기준 
-    margin-right : 10vw;
-    margin-bottom : 35px;
+    margin-right : 5vw;
 
     text-decoration: none;
     font-weight: 600;
@@ -47,11 +50,16 @@ const Writebutton = styled.button`
 `;
 
 
-const Main = props => {
+const Main = ({ title }) => {
+    const { postIdx } = useParams();
     return (
         <MainContainer>
-            <HeadTitle>{props.title}</HeadTitle>
-            <Writebutton>글쓰기</Writebutton>
+            <HeadTitle>{title}</HeadTitle>
+            {postIdx ?
+                null :
+
+                <Writebutton>글쓰기</Writebutton>
+            }
         </MainContainer>
     );
 };

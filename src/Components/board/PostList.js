@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import Pagination from 'react-js-pagination'
-import NoticeView from './NoticeView';
 import { Link } from "react-router-dom";
+import { useAuthState } from 'Context';
 
 const PaginationBox = styled.div`
   .pagination { display: flex; justify-content: center; margin-top: 15px;}
@@ -25,13 +25,12 @@ const PaginationBox = styled.div`
   ul.pagination li.active { background-color: #337ab7; }
   ul.pagination li a:hover,
   ul.pagination li a.active { color: blue; }
-`
+`;
 
 const Table = styled.table`
   text-align: center;
   vertical-align: middle;
   width: 80vw;
-  
 
   // 테이블 값을 중앙으로 
   // 세로방향  | 가로방향 
@@ -44,10 +43,20 @@ const Thead = styled.thead`
   border-color: var(--color-dark);
 `;
 
-const BoardPage = ({ postIdx }) => {
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+  :hover {
+    color: black;
+  }
+`;
+
+const PostList = ({ boardIdx }) => {
+  const userInfo = useAuthState();
+  const accessToken = userInfo.token || "";
   const [tableData, setTableData] = useState([]);
   const [page, setPage] = useState(1);
-  const [items, setItems] = useState(5);
+  const items = 5;
 
   useEffect(() => {
     // async는 이 부분이 비동기 처리를 하는 곳이라는 것을 알림 
@@ -55,16 +64,15 @@ const BoardPage = ({ postIdx }) => {
       try {
         // axios.get이 반환하는 것은 Promise 객체 
         // await을 붙이면 프로미스가 반환될 때까지 기다린다. 
-        const res = await axios.get(`/board/${postIdx}`);
-        setTableData(res.data.products);
-        console.log(res.data.products);
+        const res = await axios.get(`/board/${boardIdx}`,{ headers: { "Authorization": `Bearer ${accessToken}` } });
+        setTableData(res.data.content);
       } catch (e) {
         console.error(e.message)
       }
     })();
   }, [])
 
-  const handlePageChange = (page) => { setPage(page); };
+  const handlePageChange = page => setPage(page);
 
   return (
     <>
@@ -85,12 +93,12 @@ const BoardPage = ({ postIdx }) => {
               tableData.slice(
                 items * (page - 1),
                 items * (page - 1) + items
-              ).map((data) => {
+              ).map((data, idx) => {
                 return (
                   <tr style={{ height: "70px" }} key={data.id}>
-                    <td style={{ textAlign: "left", paddingLeft: "50px" }}> <Link to="/notice/noticeview">{data.title}</Link></td>
-                    <td>{data.nickname}</td>
-                    <td>{data.created_at.substr(0, 10)}</td>
+                    <td style={{ textAlign: "left", paddingLeft: "50px" }}> <StyledLink to={`/${boardIdx}/${idx}`}>{data.title}</StyledLink></td>
+                    <td>{data.authorId}</td>
+                    <td>{data.createdAt.substr(0, 10)}</td>
                   </tr>
                 );
               })
@@ -109,9 +117,6 @@ const BoardPage = ({ postIdx }) => {
       </PaginationBox>
     </>
   );
-
-
-
 };
 
-export default BoardPage;
+export default PostList;

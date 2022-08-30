@@ -14,11 +14,12 @@ module.exports = function (app) {
 			}
 		})
 	)
-	app.use(
-		"/board",
-		createProxyMiddleware({
-			target: "https://home.astro36.me",
-			changeOrigin: true,
-		})
-	)
+	// app.use(
+	// 	"/board",
+	// 	createProxyMiddleware({
+	// 		target: "http://localhost:4000",
+	// 		// target: "https://home.astro36.me",
+	// 		changeOrigin: true,
+	// 	})
+	// )
 }

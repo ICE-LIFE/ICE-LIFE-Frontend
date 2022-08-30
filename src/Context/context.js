@@ -13,6 +13,7 @@ const AuthStateContext = createContext(null);
 // 이렇게 하면 필요한 구성 요소에 dispatch를 쉽게 제공할 수 있다.
 const AuthDispatchContext = createContext(null);
 
+
 // 하위 컴포넌트에서 해당 함수를 호출함으로써, 위에서 createContext로 생성한 컨텍스트를
 // 해당 함수를 호출 한 하위 컴포넌트로 넘길 수 있다.
 export const useAuthState = () => {
