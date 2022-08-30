@@ -15,7 +15,7 @@ export const loginUser = async (dispatch, loginPayload) => {
         const response = await axios.post(`/login?${params}`);
         if (response.status === 200) {
             const userInfo = await axios.get("/whoami", { headers: { "Authorization": `Bearer ${response.data}` } });
-            const userIdNum = Number(userInfo.data.substr(userInfo.data.indexOf("Id") + 5, 8));
+            const userIdNum = parseInt(userInfo.data.substr(userInfo.data.indexOf("Id") + 5, 8));
             dispatch({ type: "LOGIN_SUCCESS", payload: { user: loginPayload.email, auth_token: response.data, userIdNum: userIdNum } });
             localStorage.setItem("currentUser", JSON.stringify({ user: loginPayload.email, auth_token: response.data, userIdNum: userIdNum }));
 
