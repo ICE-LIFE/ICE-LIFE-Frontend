@@ -4,7 +4,7 @@ module.exports = function (app) {
 	app.use(
 		"/api",
 		createProxyMiddleware(['/v1', '/v2'], {
-			target: "https://home.astro36.me",
+			target: "http://icelife.co.kr",
 			changeOrigin: true,
 			router: {
 				'/v2': process.env.REACT_APP_V2_URL
@@ -14,12 +14,4 @@ module.exports = function (app) {
 			}
 		})
 	)
-	// app.use(
-	// 	"/board",
-	// 	createProxyMiddleware({
-	// 		target: "http://localhost:4000",
-	// 		// target: "https://home.astro36.me",
-	// 		changeOrigin: true,
-	// 	})
-	// )
 }

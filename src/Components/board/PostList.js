@@ -62,8 +62,8 @@ const PostList = ({ boardIdx }) => {
     // async는 이 부분이 비동기 처리를 하는 곳이라는 것을 알림 
     (async () => {
       try {
-        // axios.get이 반환하는 것은 Promise 객체 
-        // await을 붙이면 프로미스가 반환될 때까지 기다린다. 
+        // axios.get이 반환하는 것은 Promise 객체
+        // await을 붙이면 프로미스가 반환될 때까지 기다린다.
         const res = await axios.get(`/board/${boardIdx}`,{ headers: { "Authorization": `Bearer ${accessToken}` } });
         setTableData(res.data.content);
       } catch (e) {

@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import oc from 'open-color';
-import axios from 'axios';
-
 
 const SearchContainer = styled.div`
     float: right;

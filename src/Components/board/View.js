@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAuthState } from 'Context';
+import HTMLReactParser from "html-react-parser";
 
 const HeadTitle = styled.h1`
     margin-top: 20px;
@@ -39,12 +40,13 @@ const View = ({ boardName }) => {
     return (
         <>
             <HeadTitle>{contents.title}</HeadTitle>
-            <p>{contents.content}</p>
+
+            <div>{HTMLReactParser(contents.content)}</div>
+            {/* <p>{contents.content}</p> */}
             <img src={contents.thumbnail} alt={"썸네일"} />
 
             <Link to={`/${boardName}/${parseInt(postIdx) - 1}`}>이전글</Link>
             <Link to={`/${boardName}/${parseInt(postIdx) + 1}`}>다음글</Link>
-            
         </>
     );
 };

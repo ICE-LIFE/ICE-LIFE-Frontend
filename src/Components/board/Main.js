@@ -50,7 +50,7 @@ const Writebutton = styled.button`
 `;
 
 
-const Main = ({ title }) => {
+const Main = ({ title, setWrite }) => {
     const { postIdx } = useParams();
     return (
         <MainContainer>
@@ -58,7 +58,7 @@ const Main = ({ title }) => {
             {postIdx ?
                 null :
 
-                <Writebutton>글쓰기</Writebutton>
+                <Writebutton onClick={ e => { e.preventDefault(); setWrite(true)}}>글쓰기</Writebutton>
             }
         </MainContainer>
     );

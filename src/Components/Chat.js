@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import * as StompJs from "@stomp/stompjs";
-import * as SockJS from "sockjs-client";
+import SockJS from "sockjs-client";
 import { useAuthState } from "Context";
 import CloseIcon from "@mui/icons-material/Close";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -57,7 +57,6 @@ const Chat = () => {
     const [admission, setAdmission] = useState(false);
     const [invited, setInvited] = useState(false);
     const [chatRoomName, setChatRoomName] = useState("private");
-    const [participants, setParticipants] = useState([]);
     const [chatMessages, setChatMessages] = useState([]);
     const [message, setMessage] = useState("");
 
@@ -82,19 +81,11 @@ const Chat = () => {
             heartbeatOutgoing: 4000,
             onStompError: frame => console.error(frame),
             onConnect: () => {
-                // 공용방 입장 권한 획득
-                client.current.publish({
-                    destination: `/app/room/${publicRoomSeq}/invite`,
-                    body: `${userIdNum}`,
-                });
-                // 공용방 구독
-                client.current.subscribe(`/user/${email}/topic/room/${publicRoomSeq}`, ({ body }) => {
-                    // 호출된 사람이 나인 경우에만 채팅 알림
-                    const found = JSON.parse(body).content.match(/\d+/g);
-                    if (parseInt(found[1]) === userIdNum) {
-                        triggerNotify(`채팅방 초대 알림`, { body: `${JSON.parse(body).content}` });
-                        ROOM_SEQ.current = parseInt(found[2]);
-                    }
+                client.current.subscribe(`/user/${email}/queue/room/join`, ({ body }) => {
+                    const parsing = JSON.parse(body);
+                    ROOM_SEQ.current = parsing.where;
+                    if (parsing.members[0] !== userIdNum)
+                        triggerNotify(`채팅방 초대 알림`, { body: `${parsing.members[0]}님이 ${parsing.members[1]}님을 ${parsing.where}번 채팅방에 초대합니다.` });
                 });
             },
         });
@@ -108,10 +99,11 @@ const Chat = () => {
     // 채팅방 개설
     const establish = () => {
         client.current.subscribe(`/user/${email}/queue/room/join`, ({ body }) => {
+            // 멤버를 초대하는 경우에도 해당 콜백함수가 실행 됨.
+            // 따라서 초대된 멤버가 존재할 때(members[1]이 존재할 때) 추가로 subscribe를 실행시키지 않음
+            if (JSON.parse(body).members[1]) return;
+
             ROOM_SEQ.current = JSON.parse(body).where;
-
-            setParticipants([JSON.parse(body).members]);
-
             subscribe();
         });
         client.current.publish({
@@ -124,7 +116,7 @@ const Chat = () => {
     const subscribe = () => {
         client.current.subscribe(`/user/${email}/topic/room/${ROOM_SEQ.current}`, ({ body }) => {
             if (JSON.parse(body).from !== userIdNum)
-                triggerNotify(`채팅 알림`, { body: `${JSON.parse(body).content}` });
+                triggerNotify(`${JSON.parse(body).from}님의 채팅`, { body: `${JSON.parse(body).content}` });
             setChatMessages(_chatMessages => [..._chatMessages, body]);
         });
     };
@@ -150,14 +142,13 @@ const Chat = () => {
             body: `${inviteUser}`,
         });
 
-        // 초대 메세지 발송
-        client.current.publish({
-            destination: `/app/room/${publicRoomSeq}`,
-            body: `${userIdNum}님이 ${inviteUser}님을 ${ROOM_SEQ.current}번 채팅방에 초대합니다.`,
-        });
         setInviteUser("");
     };
 
+    const handleClose = async e => {
+        e.preventDefault();
+        setVisible(false);
+    };
 
     const handleEstablish = async e => {
         e.preventDefault();
@@ -181,48 +172,46 @@ const Chat = () => {
         <>
             {visible ?
                 minimize ? <Container><Controller onClick={e => { e.preventDefault(); setMinimize(false); }}><ExpandLessIcon /></Controller></Container> :
+                    <Container>
+                        <div>
+                            <Controller onClick={handleClose}><CloseIcon /></Controller>
+                            <Controller onClick={e => { e.preventDefault(); setMinimize(true); }}><ExpandMoreIcon /></Controller>
+                            {invited ?
+                                <input type={"text"} placeholder={"초대할 사람의 학번"} value={inviteUser}
+                                    onChange={e => setInviteUser(e.target.value)}
+                                    onKeyPress={e => e.key === "Enter" && invite()} />
+                                :
+                                <button onClick={handleInvite}>대화 상대 초대</button>
+                            }
+                        </div>
+                        {admission ?
+                            <>
+                                {chatMessages && chatMessages.length > 0 && (
+                                    <ul>
+                                        {chatMessages.map((_chatMessage, index) => (
+                                            <li key={index}>{JSON.parse(_chatMessage).content}</li>
+                                        ))}
+                                    </ul>
+                                )}
+                                <div>
+                                    <input
+                                        type={"text"}
+                                        placeholder={"메세지를 입력해주세요."}
+                                        value={message}
+                                        onChange={e => setMessage(e.target.value)}
+                                        onKeyPress={e => e.key === "Enter" && publish(message)}
+                                    />
+                                    <button onClick={() => publish(message)}>전송</button>
+                                </div>
 
-                    admission ?
-                        <Container>
-                            <div>
-                                <Controller onClick={e => { e.preventDefault(); setVisible(false); }}><CloseIcon /></Controller>
-                                <Controller onClick={e => { e.preventDefault(); setMinimize(true); }}><ExpandMoreIcon /></Controller>
-                                {invited ?
-                                    <input type={"text"} placeholder={"초대할 사람의 학번"} value={inviteUser}
-                                        onChange={e => setInviteUser(e.target.value)}
-                                        onKeyPress={e => e.key === "Enter" && invite()}></input>
-                                    :
-                                    <button onClick={handleInvite}>대화 상대 초대</button>
-                                }
-
-                            </div>
-                            {chatMessages && chatMessages.length > 0 && (
-                                <ul>
-                                    {chatMessages.map((_chatMessage, index) => (
-                                        <li key={index}>{JSON.parse(_chatMessage).content}</li>
-                                    ))}
-                                </ul>
-                            )}
-                            <div>
-                                <input
-                                    type={"text"}
-                                    placeholder={"메세지를 입력해주세요."}
-                                    value={message}
-                                    onChange={e => setMessage(e.target.value)}
-                                    onKeyPress={e => e.key === "Enter" && publish(message)}
-                                />
-                                <button onClick={() => publish(message)}>전송</button>
-                            </div>
-                        </Container>
-                        :
-                        <Container>
-                            <div>
-                                <Controller onClick={e => { e.preventDefault(); setVisible(false); }}><CloseIcon /></Controller>
-                                <Controller onClick={e => { e.preventDefault(); setMinimize(true); }}><ExpandMoreIcon /></Controller>
-                            </div>
-                            <Admission onClick={handleEstablish}>새 채팅방 개설</Admission>
-                            <Admission onClick={handleAdmission}>초대받은 채팅방 입장</Admission>
-                        </Container>
+                            </>
+                            :
+                            <>
+                                <Admission onClick={handleEstablish}>새 채팅방 개설</Admission>
+                                <Admission onClick={handleAdmission}>초대받은 채팅방 입장</Admission>
+                            </>
+                        }
+                    </Container>
                 : null
             }
         </>
