@@ -3,14 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
     "@ckeditor/ckeditor5-build-classic": "^35.1.0",
     "@ckeditor/ckeditor5-react": "^5.0.2",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+=======
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+>>>>>>> 2049ba4b031b14449f4a9df979f142653a502a4c
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
-    "@mui/icons-material": "^5.10.2",
-    "@mui/material": "^5.10.2",
+    "@mui/icons-material": "^5.10.3",
+    "@mui/material": "^5.10.3",
     "@stomp/stompjs": "^6.1.2",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
