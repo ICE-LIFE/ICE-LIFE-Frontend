@@ -11,17 +11,19 @@ const Notice = () => {
     const [write, setWrite] = useState(false);
     return (
         <>
-            <Main title={"학생회 공지"} setWrite={setWrite} />
+            <Main title={"중고 거래"} setWrite={setWrite} write={write} />
             {/* 뷰페이지를 띄울지, 게시글 리스트를 띄울지 결정하는 로직 */}
             {postIdx ? (
-                <View boardName={"notice"} />
+                <View boardName={"used_trade"} />
             ) : (
                 <>
                     {write ? (
-                        <Editor boardName={"notice"} />
+                        <>
+                            <Editor boardName={"used_trade"} />
+                        </>
                     ) : (
                         <>
-                            <PostList boardIdx={"notice"} />
+                            <PostList boardIdx={"used_trade"} />
                             <Search />
                         </>
                     )}

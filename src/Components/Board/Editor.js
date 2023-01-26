@@ -3,7 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { useAuthState } from 'Context';
+import { useAuthState } from "Context";
 import "./Editor.css";
 
 const EditorContainer = styled.div`
@@ -18,8 +18,8 @@ const Button = styled.button`
     border-radius: 15px;
 
     margin: auto;
-    // 10% , width 기준 
-    margin-right : 20vw;
+    // 10% , width 기준
+    margin-right: 20vw;
 
     text-decoration: none;
     font-weight: 600;
@@ -27,7 +27,7 @@ const Button = styled.button`
 
     border: none;
     color: #ffffff;
-    background : #1E21CB;
+    background: #1e21cb;
 
     :hover {
         letter-spacing: 1px;
@@ -41,18 +41,19 @@ const Editor = ({ boardName }) => {
     const accessToken = userInfo.token || "";
     const [contents, setContents] = useState("");
 
-    const data = JSON.parse({
-        title: "string",
-        content: "string",
-        thumbnail: "string"
-    });
+    const data = JSON.parse(`{
+        "title": "string",
+        "content": "string",
+        "thumbnail": "string"
+    }`);
 
     const sendAricle = () => {
         (async () => {
             try {
-                const response = await axios.post(`/board/${boardName}`, data, { headers: { "Authorization": `Bearer ${accessToken}` } });
-                if (response.status === 200)
-                    setContents(response.data);
+                const response = await axios.post(`/board/${boardName}`, data, {
+                    headers: { Authorization: `Bearer ${accessToken}` },
+                });
+                if (response.status === 200) setContents(response.data);
             } catch (error) {
                 console.log(error);
             }
@@ -69,7 +70,7 @@ const Editor = ({ boardName }) => {
                     }}
                     onReady={editor => {
                         // You can store the "editor" and use when it is needed.
-                        console.log('Editor is ready to use!', editor);
+                        console.log("Editor is ready to use!", editor);
                     }}
                     onChange={(event, editor) => {
                         const data = editor.getData();
@@ -77,14 +78,20 @@ const Editor = ({ boardName }) => {
                         console.log({ event, editor, data });
                     }}
                     onBlur={(event, editor) => {
-                        console.log('Blur.', editor);
+                        console.log("Blur.", editor);
                     }}
                     onFocus={(event, editor) => {
-                        console.log('Focus.', editor);
+                        console.log("Focus.", editor);
                     }}
                 />
             </EditorContainer>
-            <Button onClick={e => { e.preventDefault(); sendAricle(); }}>작성 완료</Button>
+            <Button
+                onClick={e => {
+                    e.preventDefault();
+                    sendAricle();
+                }}>
+                작성 완료
+            </Button>
         </>
     );
 };

@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
-import styled from 'styled-components';
-
+import styled from "styled-components";
 
 const MainContainer = styled.div`
     display: flex;
@@ -22,7 +21,6 @@ const HeadTitle = styled.h1`
     transition: 0.1s;
 
     color: var(--color-dark);
-
 `;
 
 const Writebutton = styled.button`
@@ -31,8 +29,8 @@ const Writebutton = styled.button`
     border-radius: 15px;
 
     margin: auto;
-    // 10% , width 기준 
-    margin-right : 5vw;
+    // 10% , width 기준
+    margin-right: 5vw;
 
     text-decoration: none;
     font-weight: 600;
@@ -40,7 +38,7 @@ const Writebutton = styled.button`
 
     border: none;
     color: #ffffff;
-    background : #1E21CB;
+    background: #1e21cb;
 
     :hover {
         letter-spacing: 1px;
@@ -49,17 +47,19 @@ const Writebutton = styled.button`
     }
 `;
 
-
-const Main = ({ title, setWrite }) => {
-    const { postIdx } = useParams();
+const Main = ({ title, setWrite, write }) => {
     return (
         <MainContainer>
             <HeadTitle>{title}</HeadTitle>
-            {postIdx ?
-                null :
-
-                <Writebutton onClick={ e => { e.preventDefault(); setWrite(true)}}>글쓰기</Writebutton>
-            }
+            {write ? null : (
+                <Writebutton
+                    onClick={e => {
+                        e.preventDefault();
+                        setWrite(true);
+                    }}>
+                    글쓰기
+                </Writebutton>
+            )}
         </MainContainer>
     );
 };
